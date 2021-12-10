@@ -8,8 +8,8 @@ import Viewport from "./Viewport";
 
 const stageopts = {
   backgroundColor: 0x000000,
-  height: 600,
-  width: 600
+  height: window.innerHeight,
+  width: window.innerWidth
 };
 const mapXOffset = stageopts.width / 4;
 const mapYOffset = stageopts.height / 4;
