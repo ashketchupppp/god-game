@@ -1,4 +1,4 @@
-import Map from './Map'
+import TileMap from './TileMap'
 import CharacterMap from './CharacterMap'
 import { Container } from 'react-pixi-fiber'
 
@@ -6,20 +6,15 @@ export default function GameMap (props = defaults) {
   const {
     x,
     y,
-    w,
-    h,
-    gameState
+    gameState,
+    tileWidth,
+    tileHeight
   } = props
-
-  const nx = gameState.tiles.length
-  const ny = Math.max(...gameState.tiles.map(row => row.length))
-  const tileWidth = Math.round(w / nx);
-  const tileHeight = Math.round(h / ny);
 
   return (
     <>
       <Container position={[x, y]}>
-        <Map
+        <TileMap
           tileWidth={tileWidth}
           tileHeight={tileHeight}
           tiles={gameState.tiles}

@@ -34,8 +34,8 @@ export const tile = (props = {}) => {
     colour: 0x000000,
     x: 0,
     y: 0,
-    w: 10,
-    h: 10,
+    w: 20,
+    h: 20,
     ...typeProperties,
     ...props,
   };

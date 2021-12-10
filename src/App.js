@@ -13,6 +13,8 @@ const stageopts = {
 };
 const mapXOffset = stageopts.width / 4;
 const mapYOffset = stageopts.height / 4;
+const tileWidth = 25
+const tileHeight = 25
 
 const fakeGameState = {
   tiles: [
@@ -31,12 +33,12 @@ export default function App() {
       <Stage options={stageopts}>
         <AppContext.Consumer>
           {app => (
-            <Viewport app={app}>
+            <Viewport app={app} width={stageopts.width} height={stageopts.height}>
               <GameMap
                 x={mapXOffset}
                 y={mapYOffset}
-                w={stageopts.width / 2}
-                h={stageopts.height / 2}
+                tileWidth={tileWidth}
+                tileHeight={tileHeight}
                 gameState={fakeGameState}
               />
             </Viewport>
