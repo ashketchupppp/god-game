@@ -1,10 +1,10 @@
 import React from "react";
-
 import "./styles.css";
 import GameMap from "./GameMap";
 import { getTile, tileTypes } from "./Tile.jsx";
 import { getCharacter } from './Character'
-import { Stage } from "react-pixi-fiber/react-pixi-alias";
+import { Stage, AppContext } from "react-pixi-fiber";
+import Viewport from "./Viewport";
 
 const stageopts = {
   backgroundColor: 0x000000,
@@ -29,13 +29,19 @@ export default function App() {
   return (
     <div className="App">
       <Stage options={stageopts}>
-        <GameMap
-          x={mapXOffset}
-          y={mapYOffset}
-          w={stageopts.width / 2}
-          h={stageopts.height / 2}
-          gameState={fakeGameState}
-        />
+        <AppContext.Consumer>
+          {app => (
+            <Viewport app={app}>
+              <GameMap
+                x={mapXOffset}
+                y={mapYOffset}
+                w={stageopts.width / 2}
+                h={stageopts.height / 2}
+                gameState={fakeGameState}
+              />
+            </Viewport>
+          )}
+        </AppContext.Consumer>
       </Stage>
     </div>
   );

@@ -1,4 +1,5 @@
 import { Sprite } from "react-pixi-fiber";
+import { id } from './util'
 import * as PIXI from "pixi.js";
 import man from './assets/man.png'
 
@@ -18,6 +19,7 @@ export const characterProperties = {
 export const getCharacter = (x, y, type = characterTypes.MAN, props = {}) => {
   const typeProperties = characterProperties[type] || characterProperties[characterTypes.MAN]
   return {
+    key: id(),
     x: x,
     y: y,
     ...typeProperties,

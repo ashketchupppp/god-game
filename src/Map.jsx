@@ -25,7 +25,7 @@ export default function Map(props) {
   return (
     <>
       <Container position={[0, 0]}>
-        {tileFlatmap.map((tile) => (<Tile {...tile} key={`${tile.x},${tile.y}`} /> ))}
+        {tileFlatmap.map((tile) => (<Tile {...tile} /> ))}
       </Container>
     </>
   );

@@ -1,5 +1,6 @@
 import { CustomPIXIComponent } from "react-pixi-fiber";
 import * as PIXI from "pixi.js";
+import { id } from "./util";
 
 export const tileTypes = Object.freeze({
   ROCK: 'rock',
@@ -29,6 +30,7 @@ export const tile = (props = {}) => {
     typeProperties = tileProperties[props.type]
   }
   return {
+    key: id(),
     colour: 0x000000,
     x: 0,
     y: 0,
