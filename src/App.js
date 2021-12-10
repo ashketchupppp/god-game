@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles.css";
 import GameMap from "./GameMap";
-import { getTile, tileTypes } from "./tile.js";
+import { getTile, tileTypes } from "./Tile.jsx";
 import { getCharacter } from './Character'
 import { Stage } from "react-pixi-fiber/react-pixi-alias";
 
