@@ -1,9 +1,8 @@
 import Tile from "./Tile";
+import { Container } from "react-pixi-fiber";
 
 export default function Map(props) {
-  const { w, h, xOffset, yOffset, nx, ny, tiles } = props;
-  const tileWidth = Math.round(w / nx);
-  const tileHeight = Math.round(h / ny);
+  const { tileWidth, tileHeight, tiles } = props;
 
   // j is how far up the tile is, i is how far along the tile is
   let i
@@ -17,17 +16,17 @@ export default function Map(props) {
         ...tile,
         w: tileWidth - 1,
         h: tileHeight - 1,
-        x: xOffset + tileWidth * i,
-        y: yOffset + tileHeight * j
+        x: tileWidth * i,
+        y: tileHeight * j
       };
     })
   }).flat();
 
   return (
     <>
-      {tileFlatmap.map((tile) => (
-        <Tile {...tile} key={`${tile.x},${tile.y}`} />
-      ))}
+      <Container position={[0, 0]}>
+        {tileFlatmap.map((tile) => (<Tile {...tile} key={`${tile.x},${tile.y}`} /> ))}
+      </Container>
     </>
   );
 }
