@@ -4,28 +4,29 @@ export default function Map(props) {
   const { w, h, xOffset, yOffset, nx, ny, tiles } = props;
   const tileWidth = Math.round(w / nx);
   const tileHeight = Math.round(h / ny);
-  let i = -1;
-  let j = 0;
-  const tileFlatmap = tiles.flat().map((tile) => {
-    if (i < nx - 1) {
+
+  // j is how far up the tile is, i is how far along the tile is
+  let i
+  let j = -1;
+  const tileFlatmap = tiles.map(row => {
+    i = -1;
+    j++
+    return row.map(tile => {
       i++;
-    } else {
-      i = 0;
-      j++;
-    }
-    return {
-      ...tile,
-      w: tileWidth - 1,
-      h: tileHeight - 1,
-      x: xOffset + tileWidth * i,
-      y: yOffset + tileHeight * j
-    };
-  });
+      return {
+        ...tile,
+        w: tileWidth - 1,
+        h: tileHeight - 1,
+        x: xOffset + tileWidth * i,
+        y: yOffset + tileHeight * j
+      };
+    })
+  }).flat();
 
   return (
     <>
       {tileFlatmap.map((tile) => (
-        <Tile {...tile} key={tile.toString()} />
+        <Tile {...tile} key={`${tile.x},${tile.y}`} />
       ))}
     </>
   );
