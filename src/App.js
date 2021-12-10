@@ -7,7 +7,7 @@ import { getCharacter } from './Character'
 import { Stage } from "react-pixi-fiber/react-pixi-alias";
 
 const stageopts = {
-  backgroundColor: 0xffffff,
+  backgroundColor: 0x000000,
   height: 600,
   width: 600
 };
