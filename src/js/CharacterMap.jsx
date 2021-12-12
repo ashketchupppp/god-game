@@ -1,4 +1,5 @@
-import Character, { characterTypes } from "./Character";
+import React from "react";
+import Character, { characterTypes } from "./Character.jsx";
 import { Container } from "react-pixi-fiber";
 
 export default function CharacterMap(props) {

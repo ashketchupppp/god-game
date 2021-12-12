@@ -1,14 +1,12 @@
+import React from "react";
 import { Sprite } from "react-pixi-fiber";
-import { id } from './util'
+import { id } from './util.js'
 import * as PIXI from "pixi.js";
 import man from './assets/man.png'
-
-export const characterTypes = {
-  MAN: 'man'
-}
+import { CharacterTypes } from 'god-game'
 
 export const characterProperties = {
-  [characterTypes.MAN]: {
+  [CharacterTypes.MAN]: {
     texture: PIXI.Texture.from(man),
     w: 15,
     h: 19,
@@ -16,7 +14,7 @@ export const characterProperties = {
   }
 }
 
-export const getCharacter = (x, y, type = characterTypes.MAN, props = {}) => {
+export const getCharacter = (x, y, type = CharacterTypes.MAN, props = {}) => {
   const typeProperties = characterProperties[type] || characterProperties[characterTypes.MAN]
   return {
     key: id(),
@@ -34,7 +32,7 @@ export default function Character (props) {
     type
   } = props
 
-  const typeProperties = characterProperties[type] || characterProperties[characterTypes.MAN]
+  const typeProperties = characterProperties[type] || characterProperties[CharacterTypes.MAN]
   return (
     <Sprite
       x={x}
