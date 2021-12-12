@@ -36,7 +36,7 @@ pub struct Tile {
   Type: TileType
 }
 
-#[wasm_bindgen]
+#[wasm_bindgen] 
 pub struct Character {
   Type: CharacterTypes
 }
