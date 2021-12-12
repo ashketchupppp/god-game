@@ -1,4 +1,5 @@
-import Tile from "./Tile";
+import React from "react";
+import Tile from "./Tile.jsx";
 import { Container } from "react-pixi-fiber";
 
 export default function TileMap(props) {

@@ -1,8 +1,8 @@
 import React from "react";
 import "./styles.css";
-import GameMap from "./GameMap";
+import GameMap from "./GameMap.jsx";
 import { Stage, AppContext } from "react-pixi-fiber";
-import Viewport from "./Viewport";
+import Viewport from "./Viewport.jsx";
 
 export default function App(props) {
   const {
