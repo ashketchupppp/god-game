@@ -1,2 +1,12 @@
 # god-game
-Created with CodeSandbox
+
+# Development setup
+
+Pre-reqs
+```
+npm
+rustup
+rustc
+cargo
+wasm-pack
+```
