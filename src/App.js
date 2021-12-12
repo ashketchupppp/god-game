@@ -1,33 +1,24 @@
 import React from "react";
 import "./styles.css";
 import GameMap from "./GameMap";
-import { getTile, tileTypes } from "./Tile.jsx";
-import { getCharacter } from './Character'
 import { Stage, AppContext } from "react-pixi-fiber";
 import Viewport from "./Viewport";
 
-const stageopts = {
-  backgroundColor: 0x000000,
-  height: window.innerHeight,
-  width: window.innerWidth
-};
-const mapXOffset = stageopts.width / 4;
-const mapYOffset = stageopts.height / 4;
-const tileWidth = 25
-const tileHeight = 25
+export default function App(props) {
+  const {
+    gameState
+  } = props
 
-const fakeGameState = {
-  tiles: [
-    [getTile(tileTypes.GRASS), getTile(tileTypes.SAND)],
-    [getTile(tileTypes.GRASS), getTile(tileTypes.SAND)],
-    [getTile(tileTypes.GRASS), getTile(tileTypes.ROCK), getTile(tileTypes.WATER)]
-  ],
-  characters: [
-    getCharacter(1, 1)
-  ]
-}
+  const stageopts = {
+    backgroundColor: 0x000000,
+    height: window.innerHeight,
+    width: window.innerWidth
+  };
+  const mapXOffset = stageopts.width / 4;
+  const mapYOffset = stageopts.height / 4;
+  const tileWidth = 25
+  const tileHeight = 25
 
-export default function App() {
   return (
     <div className="App">
       <Stage options={stageopts}>
@@ -39,7 +30,7 @@ export default function App() {
                 y={mapYOffset}
                 tileWidth={tileWidth}
                 tileHeight={tileHeight}
-                gameState={fakeGameState}
+                gameState={gameState}
               />
             </Viewport>
           )}
