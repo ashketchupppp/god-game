@@ -12,12 +12,16 @@ import { JsGameState } from "god-game";
 // a game state that can update itself and take the users actions into account, which
 // is something that we DO want
 
-const rustGameState = new JsGameState().get_state()
+const game_state = new JsGameState()
+
+setInterval(() => {
+  game_state.tick()
+}, 1000)
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <StrictMode>
-    <App gameState={JSON.parse(rustGameState)}/>
+    <App gameState={JSON.parse(game_state.get_state())}/>
   </StrictMode>,
   rootElement
 );

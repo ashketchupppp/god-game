@@ -19,6 +19,7 @@ pub enum TileType {
   WATER = 3
 }
 
+#[derive(Copy, Clone)]
 #[derive(Serialize, Deserialize)]
 #[wasm_bindgen]
 pub enum CharacterTypes {
@@ -30,11 +31,19 @@ pub struct Tile {
   Type: TileType
 }
 
+#[derive(Copy, Clone)]
 #[derive(Serialize, Deserialize)]
 pub struct Character {
   Type: CharacterTypes,
-  x: u32,
-  y: u32
+  x: i32,
+  y: i32
+}
+
+impl Character {
+  pub fn translate(mut self, dx : i32, dy : i32) {
+    self.x += dx;
+    self.y += dy;
+  }
 }
 
 #[derive(Serialize, Deserialize)]
@@ -44,25 +53,23 @@ pub struct GameState {
 }
 
 impl GameState {
-  pub fn new() -> GameState {
-    let mut characters: Vec<Character> = Vec::new();
-    characters.push(Character { Type: CharacterTypes::MAN, x: 0, y: 0 });
-    let mut tiles: Vec<Vec<Tile>> = Vec::new();
-    tiles.push(Vec::new());
-    tiles[0].push(Tile { Type: TileType::GRASS });
-  
+  pub fn new(characters : Vec<Character>, tiles : Vec<Vec<Tile>>) -> GameState {
     return GameState { 
       tiles: tiles,
       characters: characters
      };
   }
 
-  pub fn tiles(self) -> Vec<Vec<Tile>> {
-    return self.tiles;
-  }
-
-  pub fn characters(self) -> Vec<Character> {
-    return self.characters;
+  pub fn tick(self) {
+    if (self.characters[0].x == 0 && self.characters[0].y == 0) {
+      self.characters[0].translate(1, 0)
+    } else if (self.characters[0].x == 1 && self.characters[0].y == 0) {
+      self.characters[0].translate(0, 1)
+    } else if (self.characters[0].x == 1 && self.characters[0].y == 1) {
+      self.characters[0].translate(-1, 0)
+    } else if (self.characters[0].x == 0 && self.characters[0].y == 1) {
+      self.characters[0].translate(0, -1)
+    }
   }
 }
 
@@ -75,12 +82,27 @@ pub struct JsGameState {
 impl JsGameState {
   #[wasm_bindgen(constructor)]
   pub fn new() -> JsGameState {
+    let characters = vec![
+      Character { Type: CharacterTypes::MAN, x: 0, y: 0 }
+    ];
+    let tiles = vec![
+      vec![Tile { Type: TileType::GRASS }, Tile { Type: TileType::GRASS }],
+      vec![Tile { Type: TileType::GRASS }, Tile { Type: TileType::GRASS }]
+    ];
+
     return JsGameState {
-      game_state: GameState::new()
+      game_state: GameState {
+        characters: characters,
+        tiles: tiles
+      }
     }
   }
 
   pub fn get_state(self) -> std::string::String {
     return serde_json::to_string(&self.game_state).unwrap();
+  }
+
+  pub fn tick(self) {
+    self.game_state.tick()
   }
 }

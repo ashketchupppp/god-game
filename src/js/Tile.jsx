@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import { id } from "./util.js";
 import { TileType } from "god-game";
 
-// Using TileType["x"] is necessary
+// Using TileType["x"] is necessary if we want to use enums in Rust
 export const tileProperties = {
   [TileType["0"]]: { // ROCK
     colour: 0x1e1b1e
