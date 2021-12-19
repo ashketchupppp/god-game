@@ -6,7 +6,7 @@ import man from './assets/man.png'
 import { CharacterTypes } from 'god-game'
 
 export const characterProperties = {
-  [CharacterTypes.MAN]: {
+  [CharacterTypes["0"]]: { // MAN
     texture: PIXI.Texture.from(man),
     w: 15,
     h: 19,
@@ -14,13 +14,16 @@ export const characterProperties = {
   }
 }
 
-export const getCharacter = (x, y, type = CharacterTypes.MAN, props = {}) => {
-  const typeProperties = characterProperties[type] || characterProperties[characterTypes.MAN]
+export const character = (props) => {
+  const {
+    Type
+  } = props
+
   return {
     key: id(),
-    x: x,
-    y: y,
-    ...typeProperties,
+    x: 0,
+    y: 0,
+    ...characterProperties[Type],
     ...props
   }
 }
@@ -29,10 +32,10 @@ export default function Character (props) {
   const {
     x,
     y,
-    type
+    Type
   } = props
 
-  const typeProperties = characterProperties[type] || characterProperties[CharacterTypes.MAN]
+  const typeProperties = characterProperties[Type] || characterProperties[CharacterTypes["0"]]
   return (
     <Sprite
       x={x}

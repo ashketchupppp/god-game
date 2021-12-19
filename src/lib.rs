@@ -1,6 +1,8 @@
 mod utils; // TODO: figure out how to put everything in a ./rust directory
 
 use wasm_bindgen::prelude::*;
+use serde::{Deserialize, Serialize};
+// use serde_json::Result;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -9,16 +11,7 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern {
-    fn alert(s: &str);
-}
-
-#[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, friend!");
-}
-
-#[wasm_bindgen]
+#[derive(Serialize, Deserialize)]
 pub enum TileType {
   ROCK = 0,
   GRASS = 1,
@@ -26,33 +19,34 @@ pub enum TileType {
   WATER = 3
 }
 
+#[derive(Serialize, Deserialize)]
 #[wasm_bindgen]
 pub enum CharacterTypes {
   MAN = 0
 }
 
-#[wasm_bindgen]
+#[derive(Serialize, Deserialize)]
 pub struct Tile {
   Type: TileType
 }
 
-#[wasm_bindgen] 
+#[derive(Serialize, Deserialize)]
 pub struct Character {
-  Type: CharacterTypes
+  Type: CharacterTypes,
+  x: u32,
+  y: u32
 }
 
-#[wasm_bindgen]
+#[derive(Serialize, Deserialize)]
 pub struct GameState {
   tiles: Vec<Vec<Tile>>,
   characters: Vec<Character>
 }
 
-#[wasm_bindgen]
 impl GameState {
-  #[wasm_bindgen(constructor)]
   pub fn new() -> GameState {
     let mut characters: Vec<Character> = Vec::new();
-    characters.push(Character {Type: CharacterTypes::MAN});
+    characters.push(Character { Type: CharacterTypes::MAN, x: 0, y: 0 });
     let mut tiles: Vec<Vec<Tile>> = Vec::new();
     tiles.push(Vec::new());
     tiles[0].push(Tile { Type: TileType::GRASS });
@@ -63,11 +57,30 @@ impl GameState {
      };
   }
 
-  pub fn tiles(&self) -> Vec<Vec<Tile>> {
+  pub fn tiles(self) -> Vec<Vec<Tile>> {
     return self.tiles;
   }
 
-  pub fn characters(&self) -> Vec<Character> {
+  pub fn characters(self) -> Vec<Character> {
     return self.characters;
+  }
+}
+
+#[wasm_bindgen]
+pub struct JsGameState {
+  game_state: GameState
+}
+
+#[wasm_bindgen]
+impl JsGameState {
+  #[wasm_bindgen(constructor)]
+  pub fn new() -> JsGameState {
+    return JsGameState {
+      game_state: GameState::new()
+    }
+  }
+
+  pub fn get_state(self) -> std::string::String {
+    return serde_json::to_string(&self.game_state).unwrap();
   }
 }

@@ -1,33 +1,28 @@
 import { CustomPIXIComponent } from "react-pixi-fiber";
 import * as PIXI from "pixi.js";
 import { id } from "./util.js";
+import { TileType } from "god-game";
 
-export const tileTypes = Object.freeze({
-  ROCK: 'rock',
-  GRASS: 'grass',
-  SAND: 'sand',
-  WATER: 'water'
-})
-
-export const tileProperties = Object.freeze({
-  [tileTypes.ROCK]: {
+// Using TileType["x"] is necessary
+export const tileProperties = {
+  [TileType["0"]]: { // ROCK
     colour: 0x1e1b1e
   },
-  [tileTypes.GRASS]: {
+  [TileType["1"]]: { // GRASS
     colour: 0x2b7529
   },
-  [tileTypes.SAND]: {
+  [TileType["2"]]: { // SAND
     colour: 0xe0ad41
   },
-  [tileTypes.WATER]: {
+  [TileType["3"]]: { // WATER
     colour: 0x4193e0
   }
-})
+}
 
 export const tile = (props = {}) => {
   let typeProperties
-  if (props.type) {
-    typeProperties = tileProperties[props.type]
+  if (props.Type) {
+    typeProperties = tileProperties[props.Type]
   }
   return {
     key: id(),
@@ -42,7 +37,7 @@ export const tile = (props = {}) => {
 }
 
 export const getTile = (type) => {
-  return tile({ type: type })
+  return tile({ Type: type })
 }
 
 const TYPE = "Rectangle";
@@ -56,4 +51,4 @@ export const behavior = {
     instance.endFill();
   }
 };
-export default CustomPIXIComponent(behavior, TYPE);
+export default CustomPIXIComponent(behavior, TYPE)

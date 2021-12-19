@@ -1,6 +1,8 @@
 import React from "react";
-import Tile from "./Tile.jsx";
+import Tile, { tile } from "./Tile.jsx";
 import { Container } from "react-pixi-fiber";
+
+import { TileType } from "god-game";
 
 export default function TileMap(props) {
   const { tileWidth, tileHeight, tiles } = props;
@@ -11,15 +13,15 @@ export default function TileMap(props) {
   const tileFlatmap = tiles.map(row => {
     i = -1;
     j++
-    return row.map(tile => {
+    return row.map(currTile => {
       i++;
-      return {
-        ...tile,
+      return tile({
+        ...currTile,
         w: tileWidth,
         h: tileHeight,
         x: tileWidth * i,
         y: tileHeight * j
-      };
+      })
     })
   }).flat();
 
