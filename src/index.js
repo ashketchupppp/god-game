@@ -14,9 +14,7 @@ import { JsGameState } from "god-game";
 
 const game_state = new JsGameState()
 
-setInterval(() => {
-  game_state.tick()
-}, 1000)
+game_state.tick()
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(

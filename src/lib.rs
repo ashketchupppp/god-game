@@ -40,7 +40,7 @@ pub struct Character {
 }
 
 impl Character {
-  pub fn translate(mut self, dx : i32, dy : i32) {
+  pub fn translate(&mut self, dx : i32, dy : i32) {
     self.x += dx;
     self.y += dy;
   }
@@ -53,14 +53,14 @@ pub struct GameState {
 }
 
 impl GameState {
-  pub fn new(characters : Vec<Character>, tiles : Vec<Vec<Tile>>) -> GameState {
+  pub fn new(characters : Vec<Character>, tiles : Vec<Vec<Tile>>) -> Self {
     return GameState { 
       tiles: tiles,
       characters: characters
      };
   }
 
-  pub fn tick(self) {
+  pub fn tick(&mut self) {
     if (self.characters[0].x == 0 && self.characters[0].y == 0) {
       self.characters[0].translate(1, 0)
     } else if (self.characters[0].x == 1 && self.characters[0].y == 0) {
@@ -81,7 +81,7 @@ pub struct JsGameState {
 #[wasm_bindgen]
 impl JsGameState {
   #[wasm_bindgen(constructor)]
-  pub fn new() -> JsGameState {
+  pub fn new() -> Self {
     let characters = vec![
       Character { Type: CharacterTypes::MAN, x: 0, y: 0 }
     ];
@@ -102,7 +102,7 @@ impl JsGameState {
     return serde_json::to_string(&self.game_state).unwrap();
   }
 
-  pub fn tick(self) {
+  pub fn tick(&mut self) {
     self.game_state.tick()
   }
 }
