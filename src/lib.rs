@@ -1,5 +1,6 @@
 mod utils; // TODO: figure out how to put everything in a ./rust directory
 
+
 use wasm_bindgen::prelude::*;
 use serde::{Deserialize, Serialize};
 // use serde_json::Result;
@@ -61,13 +62,13 @@ impl GameState {
   }
 
   pub fn tick(&mut self) {
-    if (self.characters[0].x == 0 && self.characters[0].y == 0) {
+    if self.characters[0].x == 0 && self.characters[0].y == 0 {
       self.characters[0].translate(1, 0)
-    } else if (self.characters[0].x == 1 && self.characters[0].y == 0) {
+    } else if self.characters[0].x == 1 && self.characters[0].y == 0 {
       self.characters[0].translate(0, 1)
-    } else if (self.characters[0].x == 1 && self.characters[0].y == 1) {
+    } else if self.characters[0].x == 1 && self.characters[0].y == 1 {
       self.characters[0].translate(-1, 0)
-    } else if (self.characters[0].x == 0 && self.characters[0].y == 1) {
+    } else if self.characters[0].x == 0 && self.characters[0].y == 1 {
       self.characters[0].translate(0, -1)
     }
   }
@@ -75,7 +76,8 @@ impl GameState {
 
 #[wasm_bindgen]
 pub struct JsGameState {
-  game_state: GameState
+  game_state: GameState,
+  running: bool
 }
 
 #[wasm_bindgen]
@@ -94,7 +96,8 @@ impl JsGameState {
       game_state: GameState {
         characters: characters,
         tiles: tiles
-      }
+      },
+      running: false
     }
   }
 
@@ -104,5 +107,19 @@ impl JsGameState {
 
   pub fn tick(&mut self) {
     self.game_state.tick()
+  }
+
+  pub async fn main(&mut self) {
+    let mut time = std::time::SystemTime::now();
+    self.game_state.tick();
+
+    while self.running {
+      if time + std::time::Duration::from_millis(50) > std::time::SystemTime::now() {
+        self.game_state.tick();
+        time = std::time::SystemTime::now();
+      }
+    }
+
+    // TODO: Figure out how to make this into a future and resolve it at the end
   }
 }

@@ -2,7 +2,6 @@ import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
 import App from './js/App.jsx'
-import { JsGameState } from "god-game";
 
 // TODO: Implement an update function in Rust and periodically call it in JS
 // TODO: Create a system that passes inputs/actions into game updates
@@ -12,14 +11,10 @@ import { JsGameState } from "god-game";
 // a game state that can update itself and take the users actions into account, which
 // is something that we DO want
 
-const game_state = new JsGameState()
-
-game_state.tick()
-
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <StrictMode>
-    <App gameState={JSON.parse(game_state.get_state())}/>
+    <App />
   </StrictMode>,
   rootElement
 );

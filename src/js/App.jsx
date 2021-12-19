@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import GameMap from "./GameMap.jsx";
 import { Stage, AppContext } from "react-pixi-fiber";
 import Viewport from "./Viewport.jsx";
+import { JsGameState } from "god-game";
 
 export default function App(props) {
-  const {
-    gameState
-  } = props
+  const [game_state, _] = useState(new JsGameState())
 
   const stageopts = {
     backgroundColor: 0x000000,
@@ -30,7 +29,7 @@ export default function App(props) {
                 y={mapYOffset}
                 tileWidth={tileWidth}
                 tileHeight={tileHeight}
-                gameState={gameState}
+                gameState={game_state}
               />
             </Viewport>
           )}
