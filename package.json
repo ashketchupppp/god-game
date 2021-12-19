@@ -29,8 +29,7 @@
     "webpack-dev-server": "^4.6.0"
   },
   "scripts": {
-    "start": "webpack start",
-    "dev": "webpack server",
+    "start": "webpack server",
     "build": "webpack build",
     "wasm-pack": "wasm-pack build"
   },
