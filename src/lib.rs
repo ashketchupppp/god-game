@@ -3,6 +3,8 @@ mod utils; // TODO: figure out how to put everything in a ./rust directory
 
 use wasm_bindgen::prelude::*;
 use serde::{Deserialize, Serialize};
+use js_sys::Promise;
+use wasm_bindgen_futures::{future_to_promise};
 // use serde_json::Result;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -109,17 +111,23 @@ impl JsGameState {
     self.game_state.tick()
   }
 
-  pub async fn main(&mut self) {
-    let mut time = std::time::SystemTime::now();
-    self.game_state.tick();
+  pub fn main(&mut self) -> Promise {
+    self.running = true;
+
+    // https://github.com/rustwasm/wasm-pack/issues/724
+    let mut time = js_sys::Date::now();
+    self.tick();
 
     while self.running {
-      if time + std::time::Duration::from_millis(50) > std::time::SystemTime::now() {
-        self.game_state.tick();
-        time = std::time::SystemTime::now();
+      if time + 50.0 > js_sys::Date::now() { // 50.0 should be 50ms
+        self.tick();
+        time = js_sys::Date::now();
       }
     }
 
-    // TODO: Figure out how to make this into a future and resolve it at the end
+    // https://github.com/rustwasm/wasm-bindgen/issues/2195
+    future_to_promise(async move {
+      Ok(JsValue::TRUE)
+    })
   }
 }
